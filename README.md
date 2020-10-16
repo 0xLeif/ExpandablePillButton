@@ -27,13 +27,13 @@ struct UniqueImageButton: View, Identifiable {
     }
 }
 
-struct ExpandablePillButton: View {
+struct ExpandablePillButton<Content: View>: View {
     @State private var isExpanded = false
     
-    private var actions: [UniqueImageButton]
+    private var actions: Content
     
-    init(actions: [UniqueImageButton]) {
-        self.actions = actions
+    init(@ViewBuilder actions: () -> Content) {
+        self.actions = actions()
     }
     
     var body: some View {
@@ -52,8 +52,6 @@ struct ExpandablePillButton: View {
                         .foregroundColor(.primary)
                         .font(.title)
                 }
-                
-                
             }
         }
         .padding()
@@ -67,10 +65,7 @@ struct ExpandablePillButton: View {
     
     var expanded: some View {
         VStack(spacing: 44) {
-            
-            ForEach(actions, id: \.id) { button in
-                button
-            }
+            actions
             
             UniqueImageButton(buttonImage: Image(systemName: "xmark")) {
                 withAnimation {
@@ -83,19 +78,19 @@ struct ExpandablePillButton: View {
 
 struct ExpandablePillButton_Previews: PreviewProvider {
     static var previews: some View {
-        ExpandablePillButton(actions: [
+        ExpandablePillButton {
             UniqueImageButton(buttonImage: Image(systemName: "pencil")) {
                 print("Hello World")
-            },
+            }
             
             UniqueImageButton(buttonImage: Image(systemName: "tray.fill")) {
                 print("Hello World")
-            },
+            }
             
             UniqueImageButton(buttonImage: Image(systemName: "tray")) {
                 print("Hello World")
             }
-        ])
+        }
     }
 }
 
