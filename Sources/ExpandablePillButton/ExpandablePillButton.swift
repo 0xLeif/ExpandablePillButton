@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct UniqueImageButton: View, Identifiable {
-    let id = UUID()
-    let buttonImage: Image
-    let action: () -> ()
+public struct UniqueImageButton: View, Identifiable {
+    public let id = UUID()
+    public let buttonImage: Image
+    public let action: () -> ()
     
-    var body: some View {
+    public var body: some View {
         Button(action: action, label: {
             buttonImage
                 .foregroundColor(.primary)
@@ -27,16 +27,16 @@ struct UniqueImageButton: View, Identifiable {
     }
 }
 
-struct ExpandablePillButton<Content: View>: View {
+public struct ExpandablePillButton<Content: View>: View {
     @State private var isExpanded = false
     
     private var actions: Content
     
-    init(@ViewBuilder actions: () -> Content) {
+    public init(@ViewBuilder actions: () -> Content) {
         self.actions = actions()
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 44) {
             if isExpanded {
                 expanded
@@ -63,7 +63,7 @@ struct ExpandablePillButton<Content: View>: View {
         .animation(.default)
     }
     
-    var expanded: some View {
+    private var expanded: some View {
         VStack(spacing: 44) {
             actions
             
