@@ -53,7 +53,7 @@ public struct ExpandablePillButton<Content: View>: View {
                         isExpanded = true
                     }
                 }) {
-                    Image("plus")
+                    Image(systemName: "plus")
                         .foregroundColor(.white)
                         .font(.title)
                 }
