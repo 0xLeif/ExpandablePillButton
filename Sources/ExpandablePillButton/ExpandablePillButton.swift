@@ -7,14 +7,19 @@
 
 import SwiftUI
 
-public struct UniqueImageButton: View, Identifiable {
+public struct UniqueImageButton<Content: View>: View, Identifiable {
     public let id = UUID()
-    public let buttonImage: Image
+    public let label: Content
     public let action: () -> ()
+    
+    public init(label: Content, action: @escaping () -> ()) {
+        self.label = label
+        self.action = action
+    }
     
     public var body: some View {
         Button(action: action, label: {
-            buttonImage
+            label
                 .foregroundColor(.primary)
                 .font(.title)
                 .background(
@@ -67,7 +72,7 @@ public struct ExpandablePillButton<Content: View>: View {
         VStack(spacing: 44) {
             actions
             
-            UniqueImageButton(buttonImage: Image(systemName: "xmark")) {
+            UniqueImageButton(label: Image(systemName: "xmark")) {
                 withAnimation {
                     isExpanded = false
                 }
@@ -79,15 +84,15 @@ public struct ExpandablePillButton<Content: View>: View {
 struct ExpandablePillButton_Previews: PreviewProvider {
     static var previews: some View {
         ExpandablePillButton {
-            UniqueImageButton(buttonImage: Image(systemName: "pencil")) {
+            UniqueImageButton(label: Image(systemName: "pencil")) {
                 print("Hello World")
             }
             
-            UniqueImageButton(buttonImage: Image(systemName: "tray.fill")) {
+            UniqueImageButton(label: Image(systemName: "tray.fill")) {
                 print("Hello World")
             }
             
-            UniqueImageButton(buttonImage: Image(systemName: "tray")) {
+            UniqueImageButton(label: Image(systemName: "tray")) {
                 print("Hello World")
             }
         }
